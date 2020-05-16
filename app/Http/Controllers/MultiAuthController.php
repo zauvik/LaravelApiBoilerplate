@@ -33,7 +33,7 @@ class MultiAuthController extends Controller
     }
 
     /**
-     * Register
+     * login
      * 
      * @param Illuminate\Http\Request $request
      * @param App\Model $model
@@ -47,7 +47,7 @@ class MultiAuthController extends Controller
             ]);
         
         $findUser = $this->userRepo->condition([['email',$request->email]],true);
-        return $authService->checkPassword($findUser, $request->password);     
+        return $authService->login($findUser, $request->password);     
     }
 
     public function loginAdmin(Request $request, AuthService $authService){
@@ -57,6 +57,44 @@ class MultiAuthController extends Controller
             ]);
 
             $findUser = $this->adminRepo->condition([['email',$request->email]],true);
-            return $authService->checkPassword($findUser, $request->password);     
+            return $authService->login($findUser, $request->password);     
+    }
+
+    /**
+     * login
+     * 
+     * @param Illuminate\Http\Request $request
+     * @param App\Model $model
+     * 
+     * @return mixed
+    */
+    public function registerUser(Request $request, AuthService $authService){
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'password'=>'required'
+        ]);
+
+        $data = [
+            'name'=>$request->name, 'email'=>$request->email, 'password'=>bcrypt($request->password)
+        ];
+    
+        $user = $this->userRepo->store($data);
+        return $authService->register($user);
+    }
+
+    public function registerAdmin(Request $request, AuthService $authService){
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'password'=>'required'
+        ]);
+
+        $data = [
+            'name'=>$request->name, 'email'=>$request->email, 'password'=>bcrypt($request->password)
+        ];
+    
+        $user = $this->adminRepo->store($data);
+        return $authService->register($user);
     }
 }

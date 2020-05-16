@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/user/login', 'MultiAuthController@loginUser');
     Route::post('/admin/login', 'MultiAuthController@loginAdmin');
+
+    Route::post('/user/register', 'MultiAuthController@registerUser');
+    Route::post('/admin/register', 'MultiAuthController@registerAdmin');
 });
 
 Route::middleware('multiauth:user')->get('/user', function (Request $request) {
@@ -25,4 +28,3 @@ Route::middleware('multiauth:user')->get('/user', function (Request $request) {
 Route::middleware('multiauth:admin')->get('/admin', function (Request $request) {
     return $request->user();
 });
-    

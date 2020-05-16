@@ -50,11 +50,12 @@ class Repository implements RepositoryInterface
 
     /**
      * -----------------------------------------
-     * Select by condition
+     * Select by some rule
      * -----------------------------------------
-     * @param array $condition
+     * @param array $rules
+     * @param boolean $first
      * 
-     * @return document
+     * @return document|collection
      * 
      */
     public function condition($rules, $first = false)
@@ -67,5 +68,33 @@ class Repository implements RepositoryInterface
         }
         else
             throw new \Exception ('Bad in second parameter, please ensure the second variable has bool value. Set true if you wanna get first record instead of all record. The default is false');
+    }
+
+    /**
+     * -----------------------------------------
+     * Insert single record to table
+     * -----------------------------------------
+     * @param array $request
+     * 
+     * @return document
+     * 
+     */
+    public function store($request)
+    {
+        return $this->model->create($request);
+    }
+
+    /**
+     * -----------------------------------------
+     * Insert multiple new record to table
+     * -----------------------------------------
+     * @param array $request
+     * 
+     * @return bool
+     * 
+     */
+    public function bulkStore($request)
+    {
+        return $this->model->insert($request);
     }
 }
