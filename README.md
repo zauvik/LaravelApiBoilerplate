@@ -17,8 +17,11 @@
 You can install this project like installing regular composer peoject:
 1. Install All depedency : composer Install
 1. Make .env file and setting database properly
-2. Migrate your database : php artisan migrate
-3. Seed dummy account : php artuisan db:seeed
+1. Generate app key : php artisan key:generate
+1. Re-cache config : php artisan config:cache
+1. Install passport client key : php artisan passport:install
+1. Migrate your database : php artisan migrate
+1. Seed dummy user : php artisan db:seeed
 
 ## Presented by :
 ![N|Solid](https://miro.medium.com/max/366/1*bl_W60QmWU_0N7iLSDbxFA.png)
